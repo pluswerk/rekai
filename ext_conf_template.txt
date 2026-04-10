@@ -1,0 +1,35 @@
+# cat=basic//10; type=boolean; label=Enabled: Activate rek.ai on the frontend
+isEnabled = 0
+
+# cat=basic//20; type=string; label=Embed Code URL: Script URL from your rek.ai dashboard (must start with https://)
+embedCode =
+
+# cat=basic//30; type=boolean; label=Consent Mode: Add data-useconsent="true" to the script tag
+consentMode = 0
+
+# cat=autocomplete//10; type=options[disabled,auto,manual]; label=Autocomplete Mode: disabled = off, auto = automatic, manual = manual init
+autocompleteMode = disabled
+
+# cat=autocomplete//20; type=string; label=CSS Selector: Target input field selector (e.g. #tx-solr-search-q)
+autocompleteSelector =
+
+# cat=autocomplete//30; type=integer[1-100]; label=Number of Hits: Number of autocomplete suggestions (1-100)
+autocompleteNrOfHits = 10
+
+# cat=autocomplete//40; type=boolean; label=Navigate on Click: Navigate to result URL when a suggestion is selected
+autocompleteNavigateOnClick = 0
+
+# cat=autocomplete//50; type=boolean; label=Use Current Language: Filter suggestions by the current page language
+autocompleteUseCurrentLang = 0
+
+# cat=advanced//10; type=boolean; label=Test Mode: Enable test mode — no data is tracked
+testMode = 0
+
+# cat=advanced//20; type=boolean; label=Use Mock Data: Use synthetic test data instead of live data
+useMockData = 0
+
+# cat=advanced//30; type=string; label=Project ID: Your rek.ai project ID (required for test mode)
+projectId =
+
+# cat=advanced//40; type=password; label=Secret Key: Your rek.ai API key (required for test mode)
+secretKey =
