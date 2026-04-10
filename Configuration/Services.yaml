@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    autowiring: true
+    autoconfigure: true
+    public: false
+
+  Pluswerk\Rekai\:
+    resource: '../Classes/*'
