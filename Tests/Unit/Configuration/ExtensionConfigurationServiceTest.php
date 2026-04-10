@@ -103,4 +103,66 @@ final class ExtensionConfigurationServiceTest extends TestCase
     {
         self::assertSame('', $this->makeService([])->getSecretKey());
     }
+
+    #[Test]
+    public function isMockDataEnabledReturnsFalseByDefault(): void
+    {
+        self::assertFalse($this->makeService([])->isMockDataEnabled());
+    }
+
+    #[Test]
+    public function isMockDataEnabledReturnsTrueWhenSet(): void
+    {
+        self::assertTrue($this->makeService(['useMockData' => '1'])->isMockDataEnabled());
+    }
+
+    #[Test]
+    public function isConsentModeReturnsTrueWhenSet(): void
+    {
+        self::assertTrue($this->makeService(['consentMode' => '1'])->isConsentMode());
+    }
+
+    #[Test]
+    public function isAutocompleteNavigateOnClickReturnsTrueWhenSet(): void
+    {
+        self::assertTrue($this->makeService(['autocompleteNavigateOnClick' => '1'])->isAutocompleteNavigateOnClick());
+    }
+
+    #[Test]
+    public function isAutocompleteUseCurrentLangReturnsTrueWhenSet(): void
+    {
+        self::assertTrue($this->makeService(['autocompleteUseCurrentLang' => '1'])->isAutocompleteUseCurrentLang());
+    }
+
+    #[Test]
+    public function isTestModeReturnsTrueWhenSet(): void
+    {
+        self::assertTrue($this->makeService(['testMode' => '1'])->isTestMode());
+    }
+
+    #[Test]
+    public function getAutocompleteModeReturnsConfiguredValue(): void
+    {
+        $svc = $this->makeService(['autocompleteMode' => 'auto']);
+        self::assertSame('auto', $svc->getAutocompleteMode());
+    }
+
+    #[Test]
+    public function getProjectIdReturnsConfiguredValue(): void
+    {
+        $svc = $this->makeService(['projectId' => 'my-project-123']);
+        self::assertSame('my-project-123', $svc->getProjectId());
+    }
+
+    #[Test]
+    public function constructorReturnsEmptyConfigOnNotConfiguredException(): void
+    {
+        $extConfig = $this->createMock(ExtensionConfiguration::class);
+        $extConfig->method('get')->willThrowException(
+            new \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException()
+        );
+        $svc = new ExtensionConfigurationService($extConfig);
+        self::assertFalse($svc->isEnabled());
+        self::assertSame('', $svc->getEmbedCode());
+    }
 }

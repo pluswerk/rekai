@@ -12,7 +12,11 @@ final class ExtensionConfigurationService
 
     public function __construct(ExtensionConfiguration $extensionConfiguration)
     {
-        $this->config = (array)($extensionConfiguration->get('rekai') ?? []);
+        try {
+            $this->config = (array)$extensionConfiguration->get('rekai');
+        } catch (\TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException $e) {
+            $this->config = [];
+        }
     }
 
     public function isEnabled(): bool
@@ -60,7 +64,7 @@ final class ExtensionConfigurationService
         return (bool)($this->config['testMode'] ?? false);
     }
 
-    public function isUseMockData(): bool
+    public function isMockDataEnabled(): bool
     {
         return (bool)($this->config['useMockData'] ?? false);
     }
