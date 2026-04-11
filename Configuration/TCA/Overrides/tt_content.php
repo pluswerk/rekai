@@ -50,10 +50,10 @@ ExtensionUtility::registerPlugin(
     'rekai',
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+ExtensionManagementUtility::addPiFlexFormValue(
     '*',
     'FILE:EXT:rekai/Configuration/FlexForms/Qna.xml',
-    'rekai_qna'
+    'rekai_qna',
 );
 
 $GLOBALS['TCA']['tt_content']['types']['rekai_qna']['showitem'] =
