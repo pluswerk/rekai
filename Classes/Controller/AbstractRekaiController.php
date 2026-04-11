@@ -9,9 +9,12 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 abstract class AbstractRekaiController extends ActionController
 {
-    public function __construct(
-        protected readonly ExtensionConfigurationService $config,
-    ) {}
+    protected ExtensionConfigurationService $config;
+
+    public function injectExtensionConfigurationService(ExtensionConfigurationService $config): void
+    {
+        $this->config = $config;
+    }
 
     /**
      * Builds a <div> HTML string with all configured data-* attributes.
