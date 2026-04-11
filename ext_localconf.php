@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Pluswerk\Rekai\Controller\QnaController;
 use Pluswerk\Rekai\Controller\RecommendationsController;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
@@ -11,6 +12,14 @@ ExtensionUtility::configurePlugin(
     'rekai',
     'Recommendations',
     [RecommendationsController::class => 'show'],
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+);
+
+ExtensionUtility::configurePlugin(
+    'rekai',
+    'Qna',
+    [QnaController::class => 'show'],
     [],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
