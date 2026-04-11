@@ -251,4 +251,57 @@ final class RekaiScriptMiddlewareTest extends TestCase
             $addedInlineScripts['rekai_autocomplete_init'],
         );
     }
+
+    #[Test]
+    public function doesNotAddBlocksaveviewScriptForNormalFrontendUser(): void
+    {
+        $addedInlineScripts = [];
+        $assetCollector = $this->createMock(AssetCollector::class);
+        $assetCollector->method('addJavaScript')->willReturn($assetCollector);
+        $assetCollector->method('addInlineJavaScript')
+            ->willReturnCallback(function() use (&$addedInlineScripts, $assetCollector) {
+                $args = func_get_args();
+                $addedInlineScripts[$args[0]] = $args[1];
+                return $assetCollector;
+            });
+
+        $middleware = new RekaiScriptMiddleware(
+            $this->makeConfig(testMode: false),
+            $assetCollector,
+        );
+        [$handler] = $this->makeHandler();
+        $middleware->process($this->makeRequest(hasBackendUser: false), $handler);
+
+        self::assertArrayNotHasKey('rekai_blocksaveview', $addedInlineScripts);
+    }
+
+    #[Test]
+    public function includesUseLangOptionWhenEnabled(): void
+    {
+        $addedInlineScripts = [];
+        $assetCollector = $this->createMock(AssetCollector::class);
+        $assetCollector->method('addJavaScript')->willReturn($assetCollector);
+        $assetCollector->method('addInlineJavaScript')
+            ->willReturnCallback(function() use (&$addedInlineScripts, $assetCollector) {
+                $args = func_get_args();
+                $addedInlineScripts[$args[0]] = $args[1];
+                return $assetCollector;
+            });
+
+        $middleware = new RekaiScriptMiddleware(
+            $this->makeConfig(
+                autocompleteMode: 'auto',
+                autocompleteSelector: '#q',
+                useCurrentLang: true,
+            ),
+            $assetCollector,
+        );
+        [$handler] = $this->makeHandler();
+        $middleware->process($this->makeRequest(), $handler);
+
+        self::assertStringContainsString(
+            '"useLang":true',
+            $addedInlineScripts['rekai_autocomplete_init'],
+        );
+    }
 }

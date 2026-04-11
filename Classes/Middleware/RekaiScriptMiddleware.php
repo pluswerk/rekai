@@ -46,7 +46,7 @@ final class RekaiScriptMiddleware implements MiddlewareInterface
 
         $autocompleteMode = $this->config->getAutocompleteMode();
         $autocompleteSelector = $this->config->getAutocompleteSelector();
-        if ($autocompleteMode !== 'disabled' && $autocompleteSelector !== '') {
+        if (in_array($autocompleteMode, ['auto', 'manual'], true) && $autocompleteSelector !== '') {
             $this->assetCollector->addInlineJavaScript(
                 'rekai_autocomplete_init',
                 $this->buildAutocompleteScript($autocompleteSelector),
@@ -58,18 +58,16 @@ final class RekaiScriptMiddleware implements MiddlewareInterface
 
     private function buildAutocompleteScript(string $selector): string
     {
-        $options = [
-            sprintf('"nrOfHits": %d', $this->config->getAutocompleteNrOfHits()),
-        ];
+        $options = ['nrOfHits' => $this->config->getAutocompleteNrOfHits()];
 
         if ($this->config->isAutocompleteUseCurrentLang()) {
-            $options[] = '"useLang": true';
+            $options['useLang'] = true;
         }
 
         $script = sprintf(
-            '__rekai.ready(function() { var rekAutocomplete = rekai_autocomplete(%s, {%s});',
+            '__rekai.ready(function() { var rekAutocomplete = rekai_autocomplete(%s, %s);',
             json_encode($selector, JSON_THROW_ON_ERROR),
-            implode(', ', $options),
+            json_encode($options, JSON_THROW_ON_ERROR),
         );
 
         if ($this->config->isAutocompleteNavigateOnClick()) {
