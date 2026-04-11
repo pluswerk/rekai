@@ -1,0 +1,60 @@
+<?php
+// Configuration/TCA/Overrides/tt_content.php
+declare(strict_types=1);
+
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
+defined('TYPO3') or die();
+
+// "rek.ai" group divider in content element selector
+ExtensionManagementUtility::addTcaSelectItem(
+    'tt_content',
+    'CType',
+    [
+        'label' => 'rek.ai',
+        'value' => '--div--',
+    ],
+);
+
+// Register Recommendations plugin
+ExtensionUtility::registerPlugin(
+    'rekai',
+    'Recommendations',
+    'Rek.ai Recommendations',
+    'content-widget-text',
+    'rekai',
+);
+
+ExtensionManagementUtility::addPiFlexFormValue(
+    '*',
+    'FILE:EXT:rekai/Configuration/FlexForms/Recommendations.xml',
+    'rekai_recommendations',
+);
+
+$GLOBALS['TCA']['tt_content']['types']['rekai_recommendations']['showitem'] =
+    '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,'
+    . '--palette--;;general,'
+    . '--palette--;;headers,'
+    . 'pi_flexform,'
+    . '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,'
+    . '--palette--;;hidden,'
+    . '--palette--;;access';
+
+// Register Q&A plugin (FlexForm added in Task 5)
+ExtensionUtility::registerPlugin(
+    'rekai',
+    'Qna',
+    'Rek.ai Q&A',
+    'content-widget-text',
+    'rekai',
+);
+
+$GLOBALS['TCA']['tt_content']['types']['rekai_qna']['showitem'] =
+    '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,'
+    . '--palette--;;general,'
+    . '--palette--;;headers,'
+    . 'pi_flexform,'
+    . '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,'
+    . '--palette--;;hidden,'
+    . '--palette--;;access';

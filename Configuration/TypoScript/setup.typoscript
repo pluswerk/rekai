@@ -1,0 +1,47 @@
+plugin.tx_rekai_recommendations {
+    view {
+        templateRootPaths {
+            0 = EXT:rekai/Resources/Private/Templates/
+        }
+        partialRootPaths {
+            0 = EXT:rekai/Resources/Private/Partials/
+        }
+        layoutRootPaths {
+            0 = EXT:rekai/Resources/Private/Layouts/
+        }
+    }
+    settings {
+        nrOfHits = 10
+        renderStyle = list
+        showImage = 0
+        showIngress = 0
+        headerText =
+        headerHeadingLevel = h2
+        cols = 2
+        subtree =
+        excludeTree =
+        allowedLangs =
+        tags =
+    }
+}
+
+plugin.tx_rekai_qna {
+    view {
+        templateRootPaths {
+            0 = EXT:rekai/Resources/Private/Templates/
+        }
+        partialRootPaths {
+            0 = EXT:rekai/Resources/Private/Partials/
+        }
+        layoutRootPaths {
+            0 = EXT:rekai/Resources/Private/Layouts/
+        }
+    }
+    settings {
+        nrOfHits = 10
+        subtree =
+        excludeTree =
+        allowedLangs =
+        tags =
+    }
+}
