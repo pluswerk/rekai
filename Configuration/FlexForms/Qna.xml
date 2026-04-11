@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<!-- Configuration/FlexForms/Qna.xml -->
+<T3DataStructure>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <sheetTitle>General</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.nrOfHits>
+                        <label>Number of Hits</label>
+                        <config>
+                            <type>number</type>
+                            <range>
+                                <lower>1</lower>
+                                <upper>100</upper>
+                            </range>
+                            <default>10</default>
+                        </config>
+                    </settings.nrOfHits>
+                </el>
+            </ROOT>
+        </sDEF>
+        <sFilter>
+            <ROOT>
+                <sheetTitle>Filter</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.subtree>
+                        <label>Subtree (comma-separated relative paths, e.g. /news/,/blog/)</label>
+                        <config>
+                            <type>input</type>
+                        </config>
+                    </settings.subtree>
+                    <settings.excludeTree>
+                        <label>Exclude Tree (comma-separated relative paths)</label>
+                        <config>
+                            <type>input</type>
+                        </config>
+                    </settings.excludeTree>
+                    <settings.allowedLangs>
+                        <label>Allowed Languages (comma-separated language codes, e.g. de,en)</label>
+                        <config>
+                            <type>input</type>
+                        </config>
+                    </settings.allowedLangs>
+                    <settings.tags>
+                        <label>Tags (comma-separated)</label>
+                        <config>
+                            <type>input</type>
+                        </config>
+                    </settings.tags>
+                </el>
+            </ROOT>
+        </sFilter>
+    </sheets>
+</T3DataStructure>

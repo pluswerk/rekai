@@ -50,6 +50,12 @@ ExtensionUtility::registerPlugin(
     'rekai',
 );
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+    '*',
+    'FILE:EXT:rekai/Configuration/FlexForms/Qna.xml',
+    'rekai_qna'
+);
+
 $GLOBALS['TCA']['tt_content']['types']['rekai_qna']['showitem'] =
     '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,'
     . '--palette--;;general,'
