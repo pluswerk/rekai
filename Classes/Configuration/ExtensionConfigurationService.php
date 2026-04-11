@@ -6,7 +6,7 @@ namespace Pluswerk\Rekai\Configuration;
 
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
-final class ExtensionConfigurationService
+class ExtensionConfigurationService
 {
     private readonly array $config;
 
