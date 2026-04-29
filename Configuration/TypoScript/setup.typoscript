@@ -2,6 +2,18 @@ lib.contentElement {
     templateRootPaths.20 = EXT:rekai/Resources/Private/Templates/Content/
 }
 
+tt_content {
+    rekai_recommendations =< lib.contentElement
+    rekai_recommendations {
+        templateName = RekaiRecommendations.fluid
+    }
+
+    rekai_qna =< lib.contentElement
+    rekai_qna {
+        templateName = RekaiQna.fluid
+    }
+}
+
 plugin.tx_rekai_recommendations {
     view {
         templateRootPaths {
