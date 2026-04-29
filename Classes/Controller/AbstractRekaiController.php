@@ -71,7 +71,10 @@ abstract class AbstractRekaiController extends ActionController
             $attrs['data-projectid'] = $projectId;
         }
         if ($secretKey !== '') {
-            $attrs['data-secretkey'] = $secretKey;
+            $attrs['data-srek'] = $secretKey;
+        }
+        if ($this->config->isMockDataEnabled()) {
+            $attrs['data-advancedmockdata'] = 'true';
         }
         return $attrs;
     }
