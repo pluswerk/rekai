@@ -74,7 +74,7 @@ abstract class AbstractRekaiController extends ActionController
             $attrs['data-srek'] = $secretKey;
         }
         if ($this->config->isMockDataEnabled()) {
-            $attrs['data-advancedmockdata'] = 'true';
+            $attrs['data-advanced_mockdata'] = 'true';
         }
         return $attrs;
     }
