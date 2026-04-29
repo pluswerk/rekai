@@ -1,5 +1,4 @@
 <?php
-// Classes/Controller/AbstractRekaiController.php
 declare(strict_types=1);
 
 namespace Pluswerk\Rekai\Controller;
@@ -16,10 +15,6 @@ abstract class AbstractRekaiController extends ActionController
         $this->config = $config;
     }
 
-    /**
-     * Builds a <div> HTML string with all configured data-* attributes.
-     * Only attributes with a value are output — empty values are omitted.
-     */
     protected function buildDivHtml(array $attrs): string
     {
         $attrString = implode(
@@ -37,9 +32,6 @@ abstract class AbstractRekaiController extends ActionController
         return '<div ' . $attrString . '></div>';
     }
 
-    /**
-     * Returns shared filter attributes (same for both content elements).
-     */
     protected function buildFilterAttributes(array $settings): array
     {
         $attrs = [];
@@ -56,9 +48,6 @@ abstract class AbstractRekaiController extends ActionController
         return $attrs;
     }
 
-    /**
-     * Returns test mode attributes if testMode is active in Extension Configuration.
-     */
     protected function buildTestModeAttributes(): array
     {
         if (!$this->config->isTestMode()) {
@@ -79,9 +68,6 @@ abstract class AbstractRekaiController extends ActionController
         return $attrs;
     }
 
-    /**
-     * Reads the UID of the current content element from the request.
-     */
     protected function getCurrentUid(): int
     {
         return (int)($this->request->getAttribute('currentContentObject')?->data['uid'] ?? 0);

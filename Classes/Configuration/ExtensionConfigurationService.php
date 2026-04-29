@@ -1,5 +1,4 @@
 <?php
-// Classes/Configuration/ExtensionConfigurationService.php
 declare(strict_types=1);
 
 namespace Pluswerk\Rekai\Configuration;

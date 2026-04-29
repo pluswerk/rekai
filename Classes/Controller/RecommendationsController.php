@@ -1,5 +1,4 @@
 <?php
-// Classes/Controller/RecommendationsController.php
 declare(strict_types=1);
 
 namespace Pluswerk\Rekai\Controller;

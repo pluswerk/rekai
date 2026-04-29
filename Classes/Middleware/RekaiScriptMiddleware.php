@@ -1,5 +1,4 @@
 <?php
-// Classes/Middleware/RekaiScriptMiddleware.php
 declare(strict_types=1);
 
 namespace Pluswerk\Rekai\Middleware;
