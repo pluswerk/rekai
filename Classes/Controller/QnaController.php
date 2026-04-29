@@ -17,10 +17,14 @@ final class QnaController extends AbstractRekaiController
         $attrs = [
             'class' => 'rek-prediction',
             'id' => $id,
-            'data-entity-type' => 'rekai-qna',
+            'data-entitytype' => 'rekai-qna',
             'data-selector' => '#' . $id,
             'data-nrofhits' => (string)max(1, min(100, (int)($settings['nrOfHits'] ?? 10))),
         ];
+
+        if (!empty($settings['currentPageQuestions'])) {
+            $attrs['data-currentpagequestions'] = 'true';
+        }
 
         $attrs = array_merge($attrs, $this->buildFilterAttributes($settings));
         $attrs = array_merge($attrs, $this->buildTestModeAttributes());

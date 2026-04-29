@@ -18,6 +18,13 @@
                             <default>10</default>
                         </config>
                     </settings.nrOfHits>
+                    <settings.currentPageQuestions>
+                        <label>Show only Q&amp;As from current page (data-currentpagequestions)</label>
+                        <config>
+                            <type>check</type>
+                            <default>0</default>
+                        </config>
+                    </settings.currentPageQuestions>
                 </el>
             </ROOT>
         </sDEF>
