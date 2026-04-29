@@ -1,5 +1,4 @@
 <?php
-// Tests/Unit/Middleware/RekaiScriptMiddlewareTest.php
 declare(strict_types=1);
 
 namespace Pluswerk\Rekai\Tests\Unit\Middleware;

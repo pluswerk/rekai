@@ -1,15 +1,11 @@
+lib.contentElement {
+    templateRootPaths.20 = EXT:rekai/Resources/Private/Templates/Content/
+}
+
 plugin.tx_rekai_recommendations {
     view {
         templateRootPaths {
             0 = EXT:rekai/Resources/Private/Templates/
-        }
-        partialRootPaths {
-            0 = EXT:rekai/Resources/Private/Partials/
-            10 = EXT:fluid_styled_content/Resources/Private/Partials/
-        }
-        layoutRootPaths {
-            0 = EXT:rekai/Resources/Private/Layouts/
-            10 = EXT:fluid_styled_content/Resources/Private/Layouts/
         }
     }
     settings {
@@ -29,14 +25,6 @@ plugin.tx_rekai_qna {
     view {
         templateRootPaths {
             0 = EXT:rekai/Resources/Private/Templates/
-        }
-        partialRootPaths {
-            0 = EXT:rekai/Resources/Private/Partials/
-            10 = EXT:fluid_styled_content/Resources/Private/Partials/
-        }
-        layoutRootPaths {
-            0 = EXT:rekai/Resources/Private/Layouts/
-            10 = EXT:fluid_styled_content/Resources/Private/Layouts/
         }
     }
     settings {

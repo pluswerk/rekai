@@ -1,5 +1,4 @@
 <?php
-// Configuration/TCA/Overrides/tt_content.php
 declare(strict_types=1);
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -7,7 +6,6 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 defined('TYPO3') or die();
 
-// "rek.ai" group divider in content element selector
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
@@ -17,7 +15,6 @@ ExtensionManagementUtility::addTcaSelectItem(
     ],
 );
 
-// Register Recommendations plugin
 ExtensionUtility::registerPlugin(
     'rekai',
     'Recommendations',
@@ -41,7 +38,6 @@ $GLOBALS['TCA']['tt_content']['types']['rekai_recommendations']['showitem'] =
     . '--palette--;;hidden,'
     . '--palette--;;access';
 
-// Register Q&A plugin (FlexForm added in Task 5)
 ExtensionUtility::registerPlugin(
     'rekai',
     'Qna',

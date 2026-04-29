@@ -1,5 +1,4 @@
 <?php
-// Tests/Unit/Configuration/ExtensionConfigurationServiceTest.php
 declare(strict_types=1);
 
 namespace Pluswerk\Rekai\Tests\Unit\Configuration;
