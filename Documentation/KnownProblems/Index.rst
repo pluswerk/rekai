@@ -5,25 +5,41 @@ Known Problems
 No output in frontend
 =====================
 
-Check:
+*  Verify that **Enabled** is set to ``1`` in
+   :guilabel:`Admin Tools > Settings > Extension Configuration > rekai`.
+*  Verify that **Embed Code URL** is a valid ``https://`` URL.
+*  Flush all TYPO3 caches.
+*  Check the browser developer tools network tab to confirm the rek.ai script
+   is loaded without errors.
 
-* ``isEnabled`` is active
-* ``embedCode`` is a valid HTTPS URL
-* TYPO3 caches are flushed
+Header not rendered
+===================
+
+The extension registers its content elements using TYPO3's standard content
+element API and the ``--palette--;;headers`` palette. Header rendering is
+handled by your site template's ``Default`` layout (from
+``EXT:fluid_styled_content``). If your sitepackage overrides
+``lib.contentElement`` without including the standard layout root path
+(``EXT:fluid_styled_content/Resources/Private/Layouts/``), the header may not
+appear.
 
 Autocomplete not working
 ========================
 
-Check:
+*  Verify that ``autocompleteMode`` is set to ``auto`` or ``manual``.
+*  Verify that ``autocompleteSelector`` matches an input element that exists
+   on the page.
+*  Confirm the rek.ai script is loaded successfully (no console errors).
 
-* ``autocompleteMode`` is ``auto`` or ``manual``
-* ``autocompleteSelector`` matches an existing input
-* rek.ai script is loaded successfully in browser network tab
+TypoScript not loaded
+=====================
 
-Theme-specific rendering differences
-====================================
+If the content elements render no output at all, the extension TypoScript may
+not be included in your site template. See :ref:`installation` for how to add
+the static template or Site Set dependency.
 
-Header/subheader and wrapper output (for example around plugin content)
-depends on the active TYPO3 sitepackage/theme templates.
-This extension follows TYPO3 content rendering conventions and does not
-enforce a custom global wrapper.
+Content element not available in wizard
+=======================================
+
+Flush the TYPO3 backend cache after installation. If the problem persists,
+verify the extension is active under :guilabel:`Admin Tools > Extensions`.

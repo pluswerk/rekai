@@ -2,25 +2,53 @@
 Installation
 ============
 
-Install with Composer
-=====================
+Requirements
+============
+
+*  TYPO3 12.4 LTS, 13.4 LTS, or 14.x
+*  PHP 8.1 or higher
+*  A `rek.ai <https://www.rek.ai>`__ account with a project and script URL
+
+Install via Composer
+====================
 
 ..  code-block:: bash
 
     composer require pluswerk/rekai
 
-Activate extension
+Include TypoScript
 ==================
 
-If not auto-activated in your setup:
+The extension ships TypoScript that must be included in your site template.
 
-1. Open :guilabel:`Admin Tools > Extensions`
-2. Activate extension key ``rekai``
-3. Flush caches
+#.  Open :guilabel:`Site Management > Templates`
+#.  Edit the root template of your site
+#.  In :guilabel:`Includes`, add **Rek.ai** to the list of included static templates
 
-Verify basic setup
-==================
+Alternatively, if your setup uses Site Sets (TYPO3 13+), include the extension
+TypoScript via your site's ``config.yaml``:
 
-1. Add at least one rek.ai content element on a page.
-2. Configure extension settings (see :ref:`configuration`).
-3. Open frontend source and verify rek.ai script output.
+..  code-block:: yaml
+
+    dependencies:
+      - pluswerk/rekai
+
+Activate the extension
+=======================
+
+In non-Composer setups, activate the extension manually:
+
+#.  Open :guilabel:`Admin Tools > Extensions`
+#.  Find ``rekai`` and activate it
+#.  Flush all caches
+
+Configure the extension
+=======================
+
+After installation, open :guilabel:`Admin Tools > Settings > Extension Configuration > rekai`
+and at minimum:
+
+*  Set **Enabled** to ``1``
+*  Enter the **Embed Code URL** from your rek.ai dashboard
+
+See :ref:`configuration` for all available settings.

@@ -1,8 +1,8 @@
 ..  _start:
 
-=====
-rekai
-=====
+=======
+Rek.ai
+=======
 
 :Extension key:
     rekai
@@ -14,14 +14,24 @@ rekai
     en
 :Author:
     Pluswerk AG
+:License:
+    This extension is published under the `GNU General Public License v3.0 or later <https://www.gnu.org/licenses/gpl-3.0.html>`__.
+:Copyright:
+    Pluswerk AG
+:Description:
+    Integrates rek.ai into TYPO3. Provides automatic script embedding via
+    middleware, optional search autocomplete, and two content elements:
+    Rek.ai Recommendations and Rek.ai Q&A.
+:Keywords:
+    rekai, rek.ai, recommendations, personalization, autocomplete, qna, content element
 
-The extension integrates rek.ai into TYPO3 and provides:
+This extension integrates `rek.ai <https://www.rek.ai>`__ — an AI-driven
+personalization service — into TYPO3. It provides:
 
-* automatic rek.ai script embedding
-* optional search autocomplete integration
-* two content elements:
-  * Recommendations
-  * Q&A
+*  Automatic injection of the rek.ai client script on all frontend pages
+*  Optional search autocomplete for any input field
+*  Content element **Rek.ai Recommendations** to display personalized page recommendations
+*  Content element **Rek.ai Q&A** to display context-aware questions and answers
 
 ..  toctree::
     :maxdepth: 2

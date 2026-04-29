@@ -5,11 +5,11 @@
         xsi:schemaLocation="https://www.phpdoc.org/guides vendor/phpdocumentor/guides-cli/resources/schema/guides.xsd"
         input-format="rst"
 >
-    <project title="rekai" />
+    <project title="Rek.ai" />
     <extension
             class="\T3Docs\Typo3DocsTheme\DependencyInjection\Typo3DocsThemeExtension"
             interlink-shortcode="pluswerk/rekai"
-            project-home="https://github.com/pluswerk/rekai-typo3"
+            project-home="https://extensions.typo3.org/extension/rekai"
             project-repository="https://github.com/pluswerk/rekai-typo3"
             typo3-core-preferred="stable"
     />
