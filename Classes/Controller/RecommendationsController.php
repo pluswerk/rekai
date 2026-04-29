@@ -30,12 +30,6 @@ final class RecommendationsController extends AbstractRekaiController
         if ((bool)($settings['showIngress'] ?? false)) {
             $attrs['data-showingress'] = 'true';
         }
-        if (!empty($settings['headerText'])) {
-            $attrs['data-headertext'] = $settings['headerText'];
-        }
-        if (!empty($settings['headerHeadingLevel'])) {
-            $attrs['data-headerheadinglevel'] = $settings['headerHeadingLevel'];
-        }
         if ((int)($settings['cols'] ?? 0) > 0) {
             $attrs['data-cols'] = (string)(int)$settings['cols'];
         }
