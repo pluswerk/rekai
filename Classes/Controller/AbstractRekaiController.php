@@ -86,4 +86,9 @@ abstract class AbstractRekaiController extends ActionController
     {
         return (int)($this->request->getAttribute('currentContentObject')?->data['uid'] ?? 0);
     }
+
+    protected function assignContentData(): void
+    {
+        $this->view->assign('data', $this->request->getAttribute('currentContentObject')?->data ?? []);
+    }
 }

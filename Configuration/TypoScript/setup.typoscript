@@ -5,9 +5,11 @@ plugin.tx_rekai_recommendations {
         }
         partialRootPaths {
             0 = EXT:rekai/Resources/Private/Partials/
+            10 = EXT:fluid_styled_content/Resources/Private/Partials/
         }
         layoutRootPaths {
             0 = EXT:rekai/Resources/Private/Layouts/
+            10 = EXT:fluid_styled_content/Resources/Private/Layouts/
         }
     }
     settings {
@@ -15,8 +17,6 @@ plugin.tx_rekai_recommendations {
         renderStyle = list
         showImage = 0
         showIngress = 0
-        headerText =
-        headerHeadingLevel = h2
         cols = 2
         subtree =
         excludeTree =
@@ -32,13 +32,16 @@ plugin.tx_rekai_qna {
         }
         partialRootPaths {
             0 = EXT:rekai/Resources/Private/Partials/
+            10 = EXT:fluid_styled_content/Resources/Private/Partials/
         }
         layoutRootPaths {
             0 = EXT:rekai/Resources/Private/Layouts/
+            10 = EXT:fluid_styled_content/Resources/Private/Layouts/
         }
     }
     settings {
         nrOfHits = 10
+        currentPageQuestions = 0
         subtree =
         excludeTree =
         allowedLangs =

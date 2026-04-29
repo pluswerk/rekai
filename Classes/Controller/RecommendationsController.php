@@ -37,6 +37,7 @@ final class RecommendationsController extends AbstractRekaiController
         $attrs = array_merge($attrs, $this->buildFilterAttributes($settings));
         $attrs = array_merge($attrs, $this->buildTestModeAttributes());
 
+        $this->assignContentData();
         $this->view->assign('divHtml', $this->buildDivHtml($attrs));
         return $this->htmlResponse();
     }
