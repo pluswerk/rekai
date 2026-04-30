@@ -23,7 +23,7 @@ Rek.ai
     middleware, optional search autocomplete, and two content elements:
     Rek.ai Recommendations and Rek.ai Q&A.
 :Keywords:
-    rekai, rek.ai, recommendations, personalization, autocomplete, qna, content element
+    rekai, rek.ai, recommendations, personalization, autocomplete, qna, content element, typo3
 
 This extension integrates `rek.ai <https://www.rek.ai>`__ — an AI-driven
 personalization service — into TYPO3. It provides:
