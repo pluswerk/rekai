@@ -9,7 +9,7 @@ Rek.ai
 :Package name:
     pluswerk/rekai
 :Version:
-    0.1.0
+    1.0.0
 :Language:
     en
 :Author:
