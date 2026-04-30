@@ -35,3 +35,4 @@ Compatibility
 
 *  TYPO3: 12.4 LTS, 13.4 LTS, 14.x
 *  PHP: 8.1 or higher
+*  `EXT:fluid_styled_content` (included in TYPO3 core)
