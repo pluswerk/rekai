@@ -1,0 +1,101 @@
+categories:
+  rekai:
+    label: 'Rek.ai'
+  rekai.basic:
+    label: 'Basic'
+    parent: rekai
+  rekai.autocomplete:
+    label: 'Autocomplete'
+    parent: rekai
+  rekai.advanced:
+    label: 'Advanced'
+    parent: rekai
+
+settings:
+  rekai.enabled:
+    type: bool
+    default: false
+    label: 'Enabled'
+    description: 'Activate rek.ai on the frontend for this site.'
+    category: rekai.basic
+
+  rekai.embedCode:
+    type: string
+    default: ''
+    label: 'Embed Code URL'
+    description: 'Script URL from your rek.ai dashboard (must start with https://).'
+    category: rekai.basic
+
+  rekai.consentMode:
+    type: bool
+    default: false
+    label: 'Consent Mode'
+    description: 'Add data-useconsent="true" to the script tag for consent manager integration.'
+    category: rekai.basic
+
+  rekai.autocomplete.mode:
+    type: string
+    default: 'disabled'
+    label: 'Autocomplete Mode'
+    description: 'Controls automatic autocomplete initialization.'
+    category: rekai.autocomplete
+    enum:
+      disabled: 'Disabled'
+      auto: 'Automatic'
+      manual: 'Manual init'
+
+  rekai.autocomplete.selector:
+    type: string
+    default: ''
+    label: 'CSS Selector'
+    description: 'Target input field selector (e.g. #tx-solr-q).'
+    category: rekai.autocomplete
+
+  rekai.autocomplete.nrOfHits:
+    type: int
+    default: 10
+    label: 'Number of Hits'
+    description: 'Number of autocomplete suggestions (1-100).'
+    category: rekai.autocomplete
+
+  rekai.autocomplete.navigateOnClick:
+    type: bool
+    default: false
+    label: 'Navigate on Click'
+    description: 'Navigate to result URL when a suggestion is selected.'
+    category: rekai.autocomplete
+
+  rekai.autocomplete.useCurrentLang:
+    type: bool
+    default: false
+    label: 'Use Current Language'
+    description: 'Filter suggestions by the current page language.'
+    category: rekai.autocomplete
+
+  rekai.advanced.testMode:
+    type: bool
+    default: false
+    label: 'Test Mode'
+    description: 'Enable test mode — no data is tracked.'
+    category: rekai.advanced
+
+  rekai.advanced.useMockData:
+    type: bool
+    default: false
+    label: 'Use Mock Data'
+    description: 'Use synthetic test data instead of live data.'
+    category: rekai.advanced
+
+  rekai.advanced.projectId:
+    type: string
+    default: ''
+    label: 'Project ID'
+    description: 'rek.ai project ID (required for test mode).'
+    category: rekai.advanced
+
+  rekai.advanced.secretKey:
+    type: string
+    default: ''
+    label: 'Secret Key'
+    description: 'rek.ai API key (required for test mode).'
+    category: rekai.advanced

@@ -5,7 +5,8 @@ namespace Pluswerk\Rekai\Tests\Unit\Middleware;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Pluswerk\Rekai\Configuration\ExtensionConfigurationService;
+use Pluswerk\Rekai\Configuration\SiteConfiguration;
+use Pluswerk\Rekai\Configuration\SiteConfigurationService;
 use Pluswerk\Rekai\Middleware\RekaiScriptMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -24,18 +25,28 @@ final class RekaiScriptMiddlewareTest extends TestCase
         int $autocompleteNrOfHits = 10,
         bool $navigateOnClick = false,
         bool $useCurrentLang = false,
-    ): ExtensionConfigurationService {
-        $config = $this->createMock(ExtensionConfigurationService::class);
-        $config->method('isEnabled')->willReturn($isEnabled);
-        $config->method('getEmbedCode')->willReturn($embedCode);
-        $config->method('isConsentMode')->willReturn($consentMode);
-        $config->method('isTestMode')->willReturn($testMode);
-        $config->method('getAutocompleteMode')->willReturn($autocompleteMode);
-        $config->method('getAutocompleteSelector')->willReturn($autocompleteSelector);
-        $config->method('getAutocompleteNrOfHits')->willReturn($autocompleteNrOfHits);
-        $config->method('isAutocompleteNavigateOnClick')->willReturn($navigateOnClick);
-        $config->method('isAutocompleteUseCurrentLang')->willReturn($useCurrentLang);
-        return $config;
+    ): SiteConfiguration {
+        return new SiteConfiguration(
+            enabled: $isEnabled,
+            embedCode: $embedCode,
+            consentMode: $consentMode,
+            autocompleteMode: $autocompleteMode,
+            autocompleteSelector: $autocompleteSelector,
+            autocompleteNrOfHits: $autocompleteNrOfHits,
+            autocompleteNavigateOnClick: $navigateOnClick,
+            autocompleteUseCurrentLang: $useCurrentLang,
+            testMode: $testMode,
+            mockDataEnabled: false,
+            projectId: '',
+            secretKey: '',
+        );
+    }
+
+    private function makeService(?SiteConfiguration $config): SiteConfigurationService
+    {
+        $service = $this->createMock(SiteConfigurationService::class);
+        $service->method('getForRequest')->willReturn($config);
+        return $service;
     }
 
     private function makeRequest(bool $hasBackendUser = false): ServerRequestInterface
@@ -58,14 +69,26 @@ final class RekaiScriptMiddlewareTest extends TestCase
     }
 
     #[Test]
+    public function passesThroughWhenNoSiteResolved(): void
+    {
+        $assetCollector = $this->createMock(AssetCollector::class);
+        $assetCollector->expects(self::never())->method('addJavaScript');
+        $middleware = new RekaiScriptMiddleware($this->makeService(null), $assetCollector);
+        [$handler, $response] = $this->makeHandler();
+        self::assertSame($response, $middleware->process($this->makeRequest(), $handler));
+    }
+
+    #[Test]
     public function doesNothingAndPassesThroughWhenDisabled(): void
     {
         $assetCollector = $this->createMock(AssetCollector::class);
         $assetCollector->expects(self::never())->method('addJavaScript');
-        $middleware = new RekaiScriptMiddleware($this->makeConfig(isEnabled: false), $assetCollector);
+        $middleware = new RekaiScriptMiddleware(
+            $this->makeService($this->makeConfig(isEnabled: false)),
+            $assetCollector,
+        );
         [$handler, $response] = $this->makeHandler();
-        $result = $middleware->process($this->makeRequest(), $handler);
-        self::assertSame($response, $result);
+        self::assertSame($response, $middleware->process($this->makeRequest(), $handler));
     }
 
     #[Test]
@@ -74,7 +97,7 @@ final class RekaiScriptMiddlewareTest extends TestCase
         $assetCollector = $this->createMock(AssetCollector::class);
         $assetCollector->expects(self::never())->method('addJavaScript');
         $middleware = new RekaiScriptMiddleware(
-            $this->makeConfig(embedCode: 'http://unsecure.example.com/s.js'),
+            $this->makeService($this->makeConfig(embedCode: 'http://unsecure.example.com/s.js')),
             $assetCollector,
         );
         [$handler] = $this->makeHandler();
@@ -87,7 +110,7 @@ final class RekaiScriptMiddlewareTest extends TestCase
         $assetCollector = $this->createMock(AssetCollector::class);
         $assetCollector->expects(self::never())->method('addJavaScript');
         $middleware = new RekaiScriptMiddleware(
-            $this->makeConfig(embedCode: 'not-a-url'),
+            $this->makeService($this->makeConfig(embedCode: 'not-a-url')),
             $assetCollector,
         );
         [$handler] = $this->makeHandler();
@@ -105,7 +128,10 @@ final class RekaiScriptMiddlewareTest extends TestCase
                 $capturedAttributes = $args[2] ?? [];
                 return $assetCollector;
             });
-        $middleware = new RekaiScriptMiddleware($this->makeConfig(consentMode: false), $assetCollector);
+        $middleware = new RekaiScriptMiddleware(
+            $this->makeService($this->makeConfig(consentMode: false)),
+            $assetCollector,
+        );
         [$handler] = $this->makeHandler();
         $middleware->process($this->makeRequest(), $handler);
         self::assertArrayNotHasKey('data-useconsent', $capturedAttributes ?? []);
@@ -122,7 +148,10 @@ final class RekaiScriptMiddlewareTest extends TestCase
                 $capturedAttributes = $args[2] ?? [];
                 return $assetCollector;
             });
-        $middleware = new RekaiScriptMiddleware($this->makeConfig(consentMode: true), $assetCollector);
+        $middleware = new RekaiScriptMiddleware(
+            $this->makeService($this->makeConfig(consentMode: true)),
+            $assetCollector,
+        );
         [$handler] = $this->makeHandler();
         $middleware->process($this->makeRequest(), $handler);
         self::assertSame('true', $capturedAttributes['data-useconsent'] ?? null);
@@ -140,7 +169,10 @@ final class RekaiScriptMiddlewareTest extends TestCase
                 $addedInlineScripts[$args[0]] = $args[1];
                 return $assetCollector;
             });
-        $middleware = new RekaiScriptMiddleware($this->makeConfig(), $assetCollector);
+        $middleware = new RekaiScriptMiddleware(
+            $this->makeService($this->makeConfig()),
+            $assetCollector,
+        );
         [$handler] = $this->makeHandler();
         $middleware->process($this->makeRequest(hasBackendUser: true), $handler);
         self::assertArrayHasKey('rekai_blocksaveview', $addedInlineScripts);
@@ -159,7 +191,10 @@ final class RekaiScriptMiddlewareTest extends TestCase
                 $addedInlineScripts[$args[0]] = $args[1];
                 return $assetCollector;
             });
-        $middleware = new RekaiScriptMiddleware($this->makeConfig(testMode: true), $assetCollector);
+        $middleware = new RekaiScriptMiddleware(
+            $this->makeService($this->makeConfig(testMode: true)),
+            $assetCollector,
+        );
         [$handler] = $this->makeHandler();
         $middleware->process($this->makeRequest(hasBackendUser: false), $handler);
         self::assertArrayHasKey('rekai_blocksaveview', $addedInlineScripts);
@@ -177,7 +212,10 @@ final class RekaiScriptMiddlewareTest extends TestCase
                 $addedInlineScripts[$args[0]] = $args[1];
                 return $assetCollector;
             });
-        $middleware = new RekaiScriptMiddleware($this->makeConfig(autocompleteMode: 'disabled'), $assetCollector);
+        $middleware = new RekaiScriptMiddleware(
+            $this->makeService($this->makeConfig(autocompleteMode: 'disabled')),
+            $assetCollector,
+        );
         [$handler] = $this->makeHandler();
         $middleware->process($this->makeRequest(), $handler);
         self::assertArrayNotHasKey('rekai_autocomplete_init', $addedInlineScripts);
@@ -196,7 +234,7 @@ final class RekaiScriptMiddlewareTest extends TestCase
                 return $assetCollector;
             });
         $middleware = new RekaiScriptMiddleware(
-            $this->makeConfig(autocompleteMode: 'auto', autocompleteSelector: '#search-input'),
+            $this->makeService($this->makeConfig(autocompleteMode: 'auto', autocompleteSelector: '#search-input')),
             $assetCollector,
         );
         [$handler] = $this->makeHandler();
@@ -219,7 +257,7 @@ final class RekaiScriptMiddlewareTest extends TestCase
                 return $assetCollector;
             });
         $middleware = new RekaiScriptMiddleware(
-            $this->makeConfig(autocompleteMode: 'auto', autocompleteSelector: ''),
+            $this->makeService($this->makeConfig(autocompleteMode: 'auto', autocompleteSelector: '')),
             $assetCollector,
         );
         [$handler] = $this->makeHandler();
@@ -240,7 +278,7 @@ final class RekaiScriptMiddlewareTest extends TestCase
                 return $assetCollector;
             });
         $middleware = new RekaiScriptMiddleware(
-            $this->makeConfig(autocompleteMode: 'auto', autocompleteSelector: '#q', navigateOnClick: true),
+            $this->makeService($this->makeConfig(autocompleteMode: 'auto', autocompleteSelector: '#q', navigateOnClick: true)),
             $assetCollector,
         );
         [$handler] = $this->makeHandler();
@@ -265,7 +303,7 @@ final class RekaiScriptMiddlewareTest extends TestCase
             });
 
         $middleware = new RekaiScriptMiddleware(
-            $this->makeConfig(testMode: false),
+            $this->makeService($this->makeConfig(testMode: false)),
             $assetCollector,
         );
         [$handler] = $this->makeHandler();
@@ -288,11 +326,11 @@ final class RekaiScriptMiddlewareTest extends TestCase
             });
 
         $middleware = new RekaiScriptMiddleware(
-            $this->makeConfig(
+            $this->makeService($this->makeConfig(
                 autocompleteMode: 'auto',
                 autocompleteSelector: '#q',
                 useCurrentLang: true,
-            ),
+            )),
             $assetCollector,
         );
         [$handler] = $this->makeHandler();
