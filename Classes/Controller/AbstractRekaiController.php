@@ -3,16 +3,22 @@ declare(strict_types=1);
 
 namespace Pluswerk\Rekai\Controller;
 
-use Pluswerk\Rekai\Configuration\ExtensionConfigurationService;
+use Pluswerk\Rekai\Configuration\SiteConfiguration;
+use Pluswerk\Rekai\Configuration\SiteConfigurationService;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 abstract class AbstractRekaiController extends ActionController
 {
-    protected ExtensionConfigurationService $config;
+    protected SiteConfigurationService $configService;
 
-    public function injectExtensionConfigurationService(ExtensionConfigurationService $config): void
+    public function injectSiteConfigurationService(SiteConfigurationService $configService): void
     {
-        $this->config = $config;
+        $this->configService = $configService;
+    }
+
+    protected function getSiteConfig(): ?SiteConfiguration
+    {
+        return $this->configService->getForRequest($this->request);
     }
 
     protected function buildDivHtml(array $attrs): string
@@ -50,19 +56,20 @@ abstract class AbstractRekaiController extends ActionController
 
     protected function buildTestModeAttributes(): array
     {
-        if (!$this->config->isTestMode()) {
+        $config = $this->getSiteConfig();
+        if ($config === null || !$config->isTestMode()) {
             return [];
         }
         $attrs = [];
-        $projectId = $this->config->getProjectId();
-        $secretKey = $this->config->getSecretKey();
+        $projectId = $config->getProjectId();
+        $secretKey = $config->getSecretKey();
         if ($projectId !== '') {
             $attrs['data-projectid'] = $projectId;
         }
         if ($secretKey !== '') {
             $attrs['data-srek'] = $secretKey;
         }
-        if ($this->config->isMockDataEnabled()) {
+        if ($config->isMockDataEnabled()) {
             $attrs['data-advanced_mockdata'] = 'true';
         }
         return $attrs;
