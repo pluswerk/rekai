@@ -13,11 +13,11 @@ Rek.ai
 :Language:
     en
 :Author:
-    Pluswerk AG
+    +Pluswerk AG
 :License:
     This extension is published under the `GNU General Public License v3.0 or later <https://www.gnu.org/licenses/gpl-3.0.html>`__.
 :Copyright:
-    Pluswerk AG
+    +Pluswerk AG
 :Description:
     Integrates rek.ai into TYPO3. Provides automatic script embedding via
     middleware, optional search autocomplete, and two content elements:
