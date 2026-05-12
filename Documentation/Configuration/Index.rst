@@ -9,9 +9,25 @@ Site settings
 
 Since version 2.0, all global settings are managed per site.
 
-**TYPO3 13 / 14** — manage values through the Settings editor:
+**TYPO3 13 / 14** — manage values through the Settings editor.
+Open :guilabel:`Site Management > Sites`, then on the site card click
+the gear icon (:guilabel:`Site-Einstellungen bearbeiten`):
 
-:guilabel:`Site Management > Sites > [your site] > Settings > rekai`
+..  figure:: /Images/10_site_management_overview.png
+    :alt: Site Management — overview with action icons per site
+    :class: with-shadow
+
+    Site Management module. The gear icon opens the Settings editor.
+
+In the Settings editor, expand the :guilabel:`Rek.ai` group on the left
+to access :guilabel:`Basic`, :guilabel:`Autocomplete` and
+:guilabel:`Advanced`:
+
+..  figure:: /Images/11_site_settings_editor.png
+    :alt: Settings editor with the Rek.ai section expanded
+    :class: with-shadow
+
+    Settings editor — Rek.ai → Basic.
 
 Values are stored in ``config/sites/<identifier>/settings.yaml`` under
 the flat ``rekai`` namespace (one entry per dotted key).
